@@ -33,7 +33,7 @@ Sarah 负责设备、材料、故障和配件。Mike 负责工作台、工具和
 
 ## 设计与打印
 
-遵循 `Context/image-to-print.md`，新外形两次选图后进入正式模型。真实模型按选定外形比较，接口、公差、装入路径、壁厚和承力分别检查。保留可编辑源，试模与成品共用接口参数，详见 `Context/cad-master-design.md`。
+遵循 `Context/image-to-print.md`，新外形两次选图后进入正式模型。外形设计、返工与审稿使用 `Skills/printlab-design-review/SKILL.md`：真实模型逐项对照，内审至少90/100且证据齐全才提交用户确认；确认后进入正式结构，改变外形必须重新走循环。接口、公差、装入路径、壁厚和承力分别检查。保留可编辑源，试模与成品共用接口参数，详见 `Context/cad-master-design.md`。
 
 每次最终制作检查质量、可靠性、打印总时间、支撑、材料切换和后处理。记录实际切片比较，模板见 `Templates/Project/Review/x2d-final-review.md`。
 

@@ -66,7 +66,7 @@ async def security_headers(request, call_next):
 @app.get("/api/health")
 def health():
     return {"ok": True, "version": __version__, "read_only": False,
-            "features": ["native-observation-v2", "material-slots-v2", "confirmation-card", "traceable-retry", "print-history-v1", "prepared-print-v1"]}
+            "features": ["native-observation-v2", "material-slots-v2", "confirmation-card", "traceable-retry", "print-history-v1", "prepared-print-v1", "appearance-review-v1"]}
 
 
 @app.get('/api/history')

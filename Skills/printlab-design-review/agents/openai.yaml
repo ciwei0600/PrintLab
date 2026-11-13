@@ -1,0 +1,6 @@
+interface:
+  display_name: "PrintLab 外形设计与审稿"
+  short_description: "选图、真实建模、证据对照与反复调整，内审达到九十分后再交用户确认"
+  default_prompt: "使用 $printlab-design-review 接续当前 PrintLab 项目，按选定设计稿对照真实模型，达到 90 分后再提交我审稿，先不要打印。"
+policy:
+  allow_implicit_invocation: true

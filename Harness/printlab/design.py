@@ -11,6 +11,9 @@ VIEWS = ("front", "back", "left", "right", "top", "bottom", "front_quarter", "ba
 
 
 def check(pid, stage="views", revision=None, reference=None):
+    if stage not in {"input", "views", "appearance", "release"}:
+        raise core.WorkflowError("Unsupported design check stage")
+    similarity_score = None
     pp = core.project_path(pid)
     path = pp / CONTRACT
     if not path.exists():
@@ -57,7 +60,7 @@ def check(pid, stage="views", revision=None, reference=None):
                             break
                 if not allowed:
                     issues.append("Modeling input is not the selected concept or an accepted derivative; inspiration cannot replace the target")
-    if stage in {"views", "release"}:
+    if stage in {"views", "appearance", "release"}:
         required = d.get("required_concept_views", list(VIEWS))
         if not isinstance(required, list) or len(required) < 3 or len(set(required)) != len(required) or any(v not in VIEWS for v in required):
             issues.append("At least three distinct supported view directions are required")
@@ -88,17 +91,17 @@ def check(pid, stage="views", revision=None, reference=None):
             identities.append((v.get("sha256"), str(v.get("crop_ltrb"))))
         if len(set(identities)) != len(required):
             issues.append("Different view labels reuse identical image regions")
-    if stage == "release":
+    if stage in {"appearance", "release"}:
         if not revision or not re.fullmatch(r"v\d{3,}", revision):
             issues.append("Release requires a vNNN revision")
         else:
             review_path = pp / "Review/design-gates" / f"{revision}.json"
-            review = core.read_json(review_path, {})
+            review = core.read_json(core.safe_path(pp, str(review_path.relative_to(pp))), {}) if review_path.exists() else {}
             if review.get("target_contract_sha256") != core.digest(path) or review.get("primary_sha256") != primary_hash:
                 issues.append("Appearance review targets a different or changed design contract")
             model = review.get("model", {})
             asset(model, "release_model")
-            if model.get("path") != f"Exports/{revision}/model.stl":
+            if not re.fullmatch(rf"Exports/{revision}/[^/]+\.(stl|step)", model.get("path") or "") or "REFERENCE" in (model.get("path") or ""):
                 issues.append("Release review must bind the actual revision model")
             if review.get("appearance") != "accepted" or not review.get("reviewer") or not review.get("findings"):
                 issues.append("Actual model appearance has not been accepted")
@@ -108,6 +111,13 @@ def check(pid, stage="views", revision=None, reference=None):
                     continue
                 if findings.get(f.get("id"), {}).get("result") != "pass" or not findings.get(f.get("id"), {}).get("evidence"):
                     issues.append(f"Appearance feature not passed with evidence: {f.get('id')}")
+            from . import appearance
+            similarity_score = appearance.assess(pp, revision, review, asset, issues)
+            if stage == "release":
+                if review_path.exists():
+                    issues.extend(appearance.approval_issues(pp, revision, review, core.digest(path)))
+                else:
+                    issues.append("User has not confirmed this appearance revision")
             model_views = d.get("required_model_views", required)
             if not isinstance(model_views, list) or len(model_views) < 3 or len(set(model_views)) != len(model_views) or any(v not in VIEWS for v in model_views):
                 issues.append("Actual model must include at least three distinct supported view directions")
@@ -119,6 +129,7 @@ def check(pid, stage="views", revision=None, reference=None):
                     issues.append(f"actual_render.{name}: not bound to reviewed model")
     return {"status": "passed" if not issues else "blocked", "stage": stage,
             "issues": issues, "target": primary, "contract": CONTRACT,
+            "similarity_score": similarity_score, "similarity_threshold": 90,
             "limits": "Checks file roles and review provenance; does not independently prove visual correspondence, fit, strength or printability",
             "print_authorized": False}
 

@@ -104,7 +104,7 @@ def parser():
     taste_list.add_argument("--project")
     design = sub.add_parser("design-check", help="Verify shape choice, selected three-view set, and model review; never prints")
     design.add_argument("project")
-    design.add_argument("--stage", choices=["input", "views", "release"], default="views")
+    design.add_argument("--stage", choices=["input", "views", "appearance", "release"], default="views")
     design.add_argument("--reference", help="Project-relative image for the input-stage check")
     design.add_argument("--revision", help="vNNN for the release-stage check")
     image3d = sub.add_parser("image3d", help="Local image-to-shape candidates; never slices or prints")

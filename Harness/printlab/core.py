@@ -158,7 +158,7 @@ def artifact_url(p, revision, directory, filename):
 
 
 def summary(p):
-    from . import shop
+    from . import shop, appearance
     data = read_json(p / "project.json")
     rev = data.get("current_revision")
     build = read_json(p / "Exports" / str(rev) / "build.json", {}) if rev else {}
@@ -166,6 +166,10 @@ def summary(p):
                 model_url=artifact_url(p, rev, "Exports", "model.glb"),
                 dimensions_mm=build.get("dimensions_mm"),
                 verification=build.get("checks", {}), shop=shop.project_summary(data["id"]))
+    workflow = appearance.workflow(data["id"], rev)
+    data["appearance_workflow"] = workflow
+    if data.get("status") in {"designing", "built", "validated", "awaiting_review", "appearance_revision", "appearance_confirmed"} and workflow["phase"] != "not_configured":
+        data["status"] = {"internal_revision": "appearance_revision", "awaiting_user_review": "awaiting_review", "appearance_confirmed": "appearance_confirmed"}[workflow["phase"]]
     return data
 
 
@@ -364,7 +368,7 @@ def build(pid, revision, engine):
             raise WorkflowError("Model build has failing validation checks")
         validate_build_lineage(p, revision, manifest)
         data = read_json(p / "project.json")
-        data.update(current_revision=revision, status="awaiting_review", updated_at=now())
+        data.update(current_revision=revision, status="appearance_revision" if (p / design.CONTRACT).exists() else "awaiting_review", updated_at=now())
         write_json(p / "project.json", data)
         return manifest
 

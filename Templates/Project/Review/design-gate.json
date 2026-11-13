@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "target_contract_sha256": null,
   "primary_sha256": null,
   "model": {
@@ -12,5 +12,52 @@
   "features": {},
   "renders": {},
   "print_authorized": false,
-  "note": "Save as Review/design-gates/vNNN.json after viewing the actual model against the selected three-view set. Every locked feature needs result=pass and evidence. Each required render (normally front/right/top) needs path, sha256 and model_sha256. No print authorization."
+  "note": "Save per revision in Review/design-gates/vNNN.json. appearance stage requires evidence and rubric score >=90; release additionally requires an actual user decision in Review/appearance-approvals/vNNN.json. Editing model, sources, target or evidence invalidates prior decisions. See Context/appearance-review.md.",
+  "source_files": [],
+  "similarity": {
+    "method": "rubric-v1",
+    "criteria": {
+      "silhouette": {
+        "score": null,
+        "observations": null,
+        "deductions": null,
+        "evidence": []
+      },
+      "proportions": {
+        "score": null,
+        "observations": null,
+        "deductions": null,
+        "evidence": []
+      },
+      "surfaces": {
+        "score": null,
+        "observations": null,
+        "deductions": null,
+        "evidence": []
+      },
+      "feature_layout": {
+        "score": null,
+        "observations": null,
+        "deductions": null,
+        "evidence": []
+      },
+      "details": {
+        "score": null,
+        "observations": null,
+        "deductions": null,
+        "evidence": []
+      }
+    },
+    "comparison": {
+      "path": null,
+      "sha256": null
+    },
+    "view_alignment": {
+      "status": "pending",
+      "scale": "uniform",
+      "nonrigid_warp": false,
+      "notes": null
+    },
+    "blocking_differences": []
+  }
 }

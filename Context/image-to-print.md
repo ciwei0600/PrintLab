@@ -1,4 +1,4 @@
-# 两次选图，再做真实模型
+# 两次选图、真实模型与迭代审稿
 
 ## 适用范围
 
@@ -9,7 +9,7 @@
 3. 围绕选定外形提供四套三视图，每套默认正、右、俯，统一坐标与比例。四套表达同一设计的空间解释，逐套检查不同方向和遮挡关系。
 4. 用户选一整套，保存 `Review/design-target.json` 中的两次选择。发现不一致时展示具体问题并修正。可用低细节空间草稿生成真实正交图，标注推定的背面与内部结构。
 5. 按选定目标建实际模型。原模型和实测尺寸约束配合接口，外形按已选目标推进。导出同源三视图、斜视与必要剖面，逐项检查偏差。
-6. 检查接口、孔位、公差、壁厚、装入路径与承力，必要时先做同源试模。图生网格作为外形候选处理。
+6. 按 [外观迭代与审稿](appearance-review.md) 内部对照和调整；至少90/100且证据完整才交用户审稿。用户明确确认本轮真实外观后，再检查正式接口、孔位、公差、壁厚、装入路径与承力，必要时先做同源试模。结构影响外形须重新进入审稿循环。图生网格作为外形候选处理。
 7. 确认配色和材料，建立正式 3MF，完成制作 Review、切片与当前打印确认，打印后检查实物。
 
 ## 改编已有模型
@@ -18,4 +18,4 @@
 
 ## 命令与记录
 
-使用 `printlab design-check --help` 查看 input、views、release 检查参数。模板位于 `Templates/Project/Review/design-target.json`。检查关联的文件、来源和 hash 后，仍要实际查看模型。选型历史通过 `printlab taste record` 保存，经验写入 `Context/taste.md`。
+使用 `printlab design-check --help` 查看 input、views、appearance、release 检查参数。模板位于 `Templates/Project/Review/design-target.json`。检查关联的文件、来源和 hash 后，仍要实际查看模型。选型历史通过 `printlab taste record` 保存，经验写入 `Context/taste.md`。

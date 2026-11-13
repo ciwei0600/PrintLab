@@ -71,7 +71,17 @@ def make_release(locked):
               "model": model, "reviewer": "synthetic review only", "appearance": "accepted", "findings": ["test"],
               "features": {f["id"]: {"result": "pass", "evidence": ["synthetic evidence"]} for f in d["features"]},
               "renders": {name: {**asset(f"Preview/v003/{name}.png"), "model_sha256": model["sha256"]} for name in design.VIEWS}}
+    review["source_files"] = [asset("Design/v003/model.py"), asset("Design/v003/params.json")]
+    comparison = asset("Preview/v003/comparison.png")
+    review["similarity"] = {"method": "rubric-v1", "criteria": {
+        k: {"score": 90, "observations": "synthetic comparison", "deductions": "synthetic minor differences", "evidence": [comparison]}
+        for k in ["silhouette", "proportions", "surfaces", "feature_layout", "details"]},
+        "comparison": comparison, "view_alignment": {"status": "matched", "scale": "uniform", "nonrigid_warp": False, "notes": "synthetic camera match"}, "blocking_differences": []}
     core.write_json(p / "Review/design-gates/v003.json", review)
+    core.write_json(p / "Review/appearance-approvals/v003.json", {
+        "status": "confirmed", "actor": "user", "quote": "Synthetic appearance approval, no print", "source": "offline test",
+        "revision": "v003", "model_sha256": model["sha256"], "target_contract_sha256": core.digest(p / design.CONTRACT),
+        "review_sha256": core.digest(p / "Review/design-gates/v003.json")})
     return p, d, review
 
 

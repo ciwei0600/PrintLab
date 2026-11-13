@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "revision": null,
+  "status": "pending",
+  "actor": "user",
+  "quote": null,
+  "source": null,
+  "model_sha256": null,
+  "target_contract_sha256": null,
+  "review_sha256": null,
+  "print_authorized": false
+}
