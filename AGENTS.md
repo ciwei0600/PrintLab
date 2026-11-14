@@ -33,6 +33,8 @@ Sarah 负责设备、材料、故障和配件。Mike 负责工作台、工具和
 
 ## 设计与打印
 
+作品制作与接续统一使用 `Skills/printlab-project-workflow/SKILL.md`，从当前阶段推进需求、选图、真实模型、外观审稿、结构、切片、逐任务授权打印和实物验收。已确认选择直接接续；本轮仅检查或修改流程时不启动制作。外观审稿由其中引用的 `printlab-design-review` 执行，CAD 工作配合 `parametric-cad-automation`。技能文档不代表后台已执行或自动授权打印。
+
 遵循 `Context/image-to-print.md`，新外形两次选图后进入正式模型。外形设计、返工与审稿使用 `Skills/printlab-design-review/SKILL.md`：真实模型逐项对照，内审至少90/100且证据齐全才提交用户确认；确认后进入正式结构，改变外形必须重新走循环。接口、公差、装入路径、壁厚和承力分别检查。保留可编辑源，试模与成品共用接口参数，详见 `Context/cad-master-design.md`。
 
 每次最终制作检查质量、可靠性、打印总时间、支撑、材料切换和后处理。记录实际切片比较，模板见 `Templates/Project/Review/x2d-final-review.md`。

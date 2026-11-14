@@ -1,0 +1,4 @@
+interface:
+  display_name: "PrintLab 项目全流程"
+  short_description: "从需求选图到真实建模审稿、结构切片、授权打印和实物验收的项目流程"
+  default_prompt: "使用 $printlab-project-workflow 接续当前作品，核对已确认版本与证据，推进本轮授权阶段并保存交接。"
